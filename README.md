@@ -82,3 +82,83 @@ Código más legible y modular
 Fácil de mantener y extender
 
 Menos riesgo de errores al cambiar una parte
+
+
+
+
+# La letra 'O' de 'SOLID' en el desarrollo de software representa el principio de:
+
+Open/Closed Principle (OCP)
+o en español: Principio Abierto/Cerrado.
+
+✅ ¿Qué significa?
+Las entidades de software (clases, módulos, funciones, etc.) deben estar abiertas para extensión pero cerradas para modificación. Esto significa que el comportamiento de una clase debe ser extensible sin modificar su código fuente.
+
+📌 Explicación simple
+Imagina que tienes una aplicación de procesamiento de imágenes que puede aplicar filtros a las imágenes. Si quieres agregar un nuevo filtro, no deberías tener que modificar el código existente. En su lugar, deberías poder extender la funcionalidad existente sin tocar el código original.
+
+En cambio, si tienes:
+
+Una clase base que define una interfaz para aplicar filtros,
+
+Y clases derivadas para cada tipo de filtro específico...
+
+Puedes agregar nuevos filtros simplemente creando nuevas clases derivadas sin modificar la clase base.
+
+🛠️ En código Java (ejemplo simple)
+
+Violando OCP:
+
+java
+
+public class ImageProcessor {
+    public void applyFilter(Image image, String filterType) {
+        if ("brightness".equals(filterType)) {
+            // Aplicar filtro de brillo
+        } else if ("contrast".equals(filterType)) {
+            // Aplicar filtro de contraste
+        }
+        // Más filtros...
+    }
+}
+
+Aplicando OCP:
+
+java
+
+public interface Filter {
+    void apply(Image image);
+}
+
+public class BrightnessFilter implements Filter {
+    public void apply(Image image) {
+        // Aplicar filtro de brillo
+    }
+}
+
+public class ContrastFilter implements Filter {
+    public void apply(Image image) {
+        // Aplicar filtro de contraste
+    }
+}
+
+public class ImageProcessor {
+    private List<Filter> filters = new ArrayList<>();
+
+    public void addFilter(Filter filter) {
+        filters.add(filter);
+    }
+
+    public void applyFilters(Image image) {
+        for (Filter filter : filters) {
+            filter.apply(image);
+        }
+    }
+}
+
+🧠 Ventajas de aplicar OCP
+
+    Código más modular y reutilizable: Puedes extender la funcionalidad sin modificar el código existente.
+    Menos riesgo de introducir errores: Al no modificar el código existente, reduces el riesgo de introducir nuevos errores.
+    Fácil de mantener y extender: Puedes agregar nuevas funcionalidades de manera sencilla y organizada.
+
