@@ -82,3 +82,8 @@ Código más legible y modular
 Fácil de mantener y extender
 
 Menos riesgo de errores al cambiar una parte
+
+
+O	OCP	
+Principio de abierto/cerrado (Open/closed principle)
+la noción de que las “entidades de software … deben estar abiertas para su extensión, pero cerradas para su modificación”.
