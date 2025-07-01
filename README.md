@@ -1,11 +1,11 @@
 # 📘 Principios SOLID en Java
 
-📚 Breve introducción a los Principios SOLID en Java
+📚 **Breve introducción a los Principios SOLID en Java**  
 Una vez que dominamos los fundamentos de la Programación Orientada a Objetos (POO) —como clases, objetos, atributos, métodos, encapsulamiento, constructores y getters/setters—, es importante comenzar a pensar en cómo escribir código limpio, mantenible y escalable.
 
 Ahí es donde entran los principios SOLID.
 
-SOLID es un conjunto de 5 buenas prácticas que te ayudan a construir software más robusto. No necesitas dominarlos al 100% al inicio, pero sí comenzar a entender su propósito.
+**SOLID** es un conjunto de 5 buenas prácticas que te ayudan a construir software más robusto. No necesitas dominarlos al 100% al inicio, pero sí comenzar a entender su propósito.
 
 En la siguiente sección, exploraremos cada principio de forma simple y con ejemplos en Java, para que puedas aplicar estas ideas paso a paso a medida que avanzas como desarrollador.
 
