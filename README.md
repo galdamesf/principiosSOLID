@@ -14,7 +14,7 @@ Los principios SOLID son cinco reglas fundamentales de diseño en la programaci�
 A continuación, te presentamos una versión simplificada y didáctica de cada principio, con analogías reales y ejemplos en Java para que puedas comprenderlos fácilmente:
 
 
-La letra 'S' de 'SOLID' en el desarrollo de software representa el principio de:
+# La letra 'S' de 'SOLID' en el desarrollo de software representa el principio de:
 
 Single Responsibility Principle (SRP)
 o en español: Principio de Responsabilidad Única.
