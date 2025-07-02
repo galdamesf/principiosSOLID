@@ -161,3 +161,130 @@ public class ImageProcessor {
     Menos riesgo de introducir errores: Al no modificar el código existente, reduces el riesgo de introducir nuevos errores.
     Fácil de mantener y extender: Puedes agregar nuevas funcionalidades de manera sencilla y organizada.
 
+La letra 'L' de 'SOLID' en el desarrollo de software representa el principio de:
+
+# El Principio de Sustitución de Liskov (LSP) suele ser el más confuso de los SOLID! Vamos a destriparlo con ejemplos claros y situaciones cotidianas para que quede cristalino.
+
+🔍 ¿Qué dice el LSP?
+📌 "Si una clase B es hija de una clase A, entonces deberíamos poder usar B en cualquier lugar donde usamos A sin que el programa se comporte de manera inesperada."
+
+En otras palabras:
+
+Los hijos no deben romper las promesas de los padres.
+
+No deben modificar comportamientos base de forma radical.
+
+🌟 Ejemplo Intuitivo: Figuras Geométricas
+✅ Caso Correcto (Cumple LSP):
+java
+class Rectángulo {
+    protected int ancho, alto;
+    
+    void setAncho(int ancho) { this.ancho = ancho; }
+    void setAlto(int alto) { this.alto = alto; }
+    int calcularArea() { return ancho * alto; }
+}
+
+class Cuadrado extends Rectángulo {
+    @Override
+    void setAncho(int ancho) {
+        this.ancho = ancho;
+        this.alto = ancho; // En un cuadrado, ancho = alto
+    }
+    
+    @Override
+    void setAlto(int alto) {
+        this.alto = alto;
+        this.ancho = alto; // En un cuadrado, alto = ancho
+    }
+}
+¿Por qué funciona?
+
+Un Cuadrado es un Rectángulo (matemáticamente cierto).
+
+Si en tu código esperas un Rectángulo y recibes un Cuadrado, no hay sorpresas: el área se calcula igual (ancho * alto).
+
+❌ Caso Incorrecto (Violación del LSP):
+Imagina que el Cuadrado sobrescribe calcularArea() para devolver siempre ancho * ancho (ignorando el alto):
+
+java
+class Cuadrado extends Rectángulo {
+    @Override
+    int calcularArea() {
+        return ancho * ancho; // ¡Rompe la lógica de Rectángulo!
+    }
+}
+Problema:
+
+Si otro código espera que calcularArea() de un Rectángulo sea ancho * alto, al recibir un Cuadrado, ¡el resultado será incorrecto!
+
+El hijo (Cuadrado) alteró una funcionalidad crítica del padre (Rectángulo).
+
+🚨 Ejemplo Realista: Violación Común
+Caso: Sistema de Pagos
+java
+class TarjetaCredito {
+    void pagar(double monto) {
+        if (monto <= 0) throw new Error("Monto inválido");
+        // Lógica de pago...
+    }
+}
+
+class TarjetaRegalo extends TarjetaCredito {
+    @Override
+    void pagar(double monto) {
+        if (monto > 100) throw new Error("Límite excedido"); // ¡Nueva restricción!
+    }
+}
+¿Por qué viola LSP?
+
+Si un módulo espera una TarjetaCredito y le pasas una TarjetaRegalo, ¡puede fallar con montos >100!
+
+El hijo añadió una condición que el padre no tiene, rompiendo la sustituibilidad.
+
+🔧 Cómo Cumplir con LSP
+Los hijos no deben fortalecer precondiciones (exigir más que el padre).
+
+Ejemplo: Si el padre acepta monto > 0, el hijo no puede exigir monto > 10.
+
+Los hijos no deben debilitar postcondiciones (prometer menos que el padre).
+
+Ejemplo: Si el padre garantiza que pagar() guarda un registro en BD, el hijo no puede omitirlo.
+
+Los hijos deben mantener invariantes (reglas internas de la clase padre).
+
+Ejemplo: Si en Rectángulo ancho != alto, entonces Cuadrado no debería heredar de él.
+
+📜 Regla Mnemotécnica para LSP
+"Si parece un pato, grazna como un pato, pero necesita baterías… no es un pato."
+– Adaptación del Duck Test.
+
+En código:
+
+Si una subclase necesita hacks para funcionar como la superclase, probablemente viola LSP.
+
+✅ Ejemplo de Diseño LSP-Friendly
+java
+interface Forma {
+    double calcularArea();
+}
+
+class Rectángulo implements Forma { ... } // Tiene ancho y alto
+class Cuadrado implements Forma { ... }   // Solo tiene lado
+Clave:
+
+No hay herencia entre Rectángulo y Cuadrado.
+
+Ambos implementan Forma, pero no se sustituyen entre sí.
+
+📊 Resumen LSP en una Tabla
+Situación	Cumple LSP?	Por qué
+Hijo no altera contratos	✅ Sí	Comportamiento predecible.
+Hijo añade excepciones	❌ No	Rompe sustitución.
+Hijo relaja condiciones	❌ No	El padre no lo permitiría.
+🛠 Consecuencias de Violar LSP
+Bugs silenciosos: Fallos que aparecen solo al usar subclases.
+
+Código frágil: Cambios en el padre pueden romper hijos (y viceversa).
+
+Difícil testing: Mocks y tests deben considerar todas las variantes de herencia.
